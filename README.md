@@ -1,0 +1,2 @@
+# libinotify
+Monitoring filesystem events
