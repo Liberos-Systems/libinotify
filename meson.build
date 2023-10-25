@@ -5,7 +5,7 @@ project('libinotify', ['cpp', 'c'],
                      'cpp_std=c++14'])
 
 glib_dep = dependency('glib-2.0', version: '>=2.5')
-linux_kernel_dep = dependency('linux', version: '>=2.3.15')
+linux_kernel_dep = dependency('linux', version: '>=3.19')
 
 exe = executable('libinotify', 'libinotify.cpp',
   dependencies : [glib_dep, linux_kernel_dep],
