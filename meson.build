@@ -1,14 +1,41 @@
 project('libinotify', ['cpp', 'c'],
-  version : '0.1.0',
-  meson_version: '>= 0.61.0',
-  default_options : ['warning_level=3',
-                     'cpp_std=c++14'])
+        version : '0.1.0',
+        meson_version: '>= 0.61.0',
+        default_options : ['warning_level=3',
+                           'cpp_std=c++20'])
 
-glib_dep = dependency('glib-2.0', version: '>=2.5')
-linux_kernel_dep = dependency('linux', version: '>=3.19')
+kernel_version = run_command('uname', '-r').stdout().strip()
+if kernel_version.version_compare('>=3.19')
+  compiler = meson.get_compiler('cpp')
+  code ='''
+            #include<iostream>
+            int main() {
+              std::cout << "Compile and link me.\n";
+              return 0;
+            }
+            '''
 
-exe = executable('libinotify', 'libinotify.cpp',
-  dependencies : [glib_dep, linux_kernel_dep],
-  install : true)
+  result = compiler.compiles(code, name : 'compile check')
+  link_result = compiler.links(code, name : 'link check')
 
-test('basic', exe)
+  if result and link_result
+    glib_dep = dependency('glib-2.0', version: '>=2.5')
+
+    subdir('libinotify')
+
+    # exe = executable('libinotify', 'libinotify.cpp',
+    #                       dependencies : glib_dep,
+    #                       install : true)
+
+    # run_target('compile_project', command : ['meson', 'compile', '-C', meson.current_build_dir()])
+  else
+    error('Compile or link check failed.')
+  endif
+else
+  error('Kernel version is too low. Required >=3.19, found ' + kernel_version)
+endif
+
+# if compiler.has_header('sys/fstat.h')
+#   # header exists, do something
+# endif
+libc6 2.3.6 
