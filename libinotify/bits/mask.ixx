@@ -1,7 +1,8 @@
+export module mask; 
 #include <sys/inotify.h>
 /* Supported events suitable for MASK parameter of INOTIFY_ADD_WATCH. */
 /* /usr/include/sys/inotify.h */
-namespace inotify {
+export namespace inotify {
     enum class InotifyMask : unsigned int {
         ACCESS=IN_ACCESS,               // File was accessed 0x00000001
         MODIFY=IN_MODIFY,               // File was modified 0x00000002

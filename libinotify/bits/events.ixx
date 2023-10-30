@@ -1,8 +1,9 @@
+export module events;
 #include <sys/inotify.h>
 
 /* Helper events.  */
 /* /usr/include/sys/inotify.h */
-namespace inotify {
+export namespace inotify {
    enum class InotifyHelperEvents : unsigned int {
        CLOSE = IN_CLOSE,          // Close. (IN_CLOSE_WRITE | IN_CLOSE_NOWRITE)
        MOVE = IN_MOVE,            // Moves. (IN_MOVED_FROM | IN_MOVED_TO)
@@ -12,4 +13,3 @@ namespace inotify {
                                   // IN_DELETE_SELF | IN_MOVE_SELF)
    };
 }
-
