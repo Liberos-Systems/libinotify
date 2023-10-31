@@ -1,8 +1,20 @@
-project('libinotify', ['cpp', 'c'],
-        version : '0.1.0',
+project('libinotify', ['cpp','c'],
+        version : '0.2.0',
         meson_version: '>= 0.61.0',
         default_options : ['warning_level=3',
                            'cpp_std=c++20'])
+
+compiler = meson.get_compiler('c')
+libc6_check_code = '''
+                    #include <stdio.h>
+                    int main() {
+                      printf("Hello, World!\n");
+                      return 0;
+                    }
+                  '''
+if not compiler.compiles(libc6_check_code)
+  error('libc6 not found')
+endif
 
 kernel_version = run_command('uname', '-r').stdout().strip()
 if kernel_version.version_compare('>=3.19')
@@ -24,7 +36,7 @@ if kernel_version.version_compare('>=3.19')
     subdir('libinotify')
 
     # exe = executable('libinotify', 'libinotify.cpp',
-    #                       dependencies : glib_dep,
+    #                       dependencies : [glib_dep],
     #                       install : true)
 
     # run_target('compile_project', command : ['meson', 'compile', '-C', meson.current_build_dir()])
@@ -34,8 +46,3 @@ if kernel_version.version_compare('>=3.19')
 else
   error('Kernel version is too low. Required >=3.19, found ' + kernel_version)
 endif
-
-# if compiler.has_header('sys/fstat.h')
-#   # header exists, do something
-# endif
-libc6 2.3.6 
