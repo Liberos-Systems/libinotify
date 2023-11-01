@@ -3,7 +3,11 @@ This is a library for monitoring file system events, written in C++23. It enable
 
 An example of how to use this library can be found in the 'examples' directory. When building the library, you can also build the example by setting the 'BUILD_EXAMPLE' variable to true. **Please note that by default, this is set to false.**
 
-## Build Command
+## Build, Compile and Install Commands
 ```bash
-meson build && meson compile -C build
+rm -rf build/
+meson build
+meson compile -C build
+meson install
 ```
+
