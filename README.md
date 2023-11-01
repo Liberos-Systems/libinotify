@@ -9,6 +9,6 @@ Please execute these commands in the root directory of the project.
 rm -rf build/
 meson build
 meson compile -C build
-meson install
+meson install -C build
 ```
 
