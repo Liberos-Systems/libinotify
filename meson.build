@@ -4,6 +4,7 @@ project('libinotify', ['cpp','c'],
         default_options : ['warning_level=3',
                            'cpp_std=c++20'])
 
+BUILD_EXAMPLE=false
 compiler = meson.get_compiler('c')
 libc6_check_code = '''
                     #include <stdio.h>
@@ -35,11 +36,16 @@ if kernel_version.version_compare('>=3.19')
 
     subdir('libinotify')
 
+    if BUILD_EXAMPLE == true
+      subdir('example')
+    endif
+
+
     # exe = executable('libinotify', 'libinotify.cpp',
     #                       dependencies : [glib_dep],
     #                       install : true)
 
-    # run_target('compile_project', command : ['meson', 'compile', '-C', meson.current_build_dir()])
+    meson.add_install_script('meson', 'compile', '-C', meson.current_build_dir())
   else
     error('Compile or link check failed.')
   endif
