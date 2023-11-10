@@ -2,6 +2,8 @@
 #include <string>
 #include <filesystem>
 #include <generator>
+#include <fstream>
+#include <iostream>
 
 namespace inotify
 {
@@ -9,6 +11,7 @@ namespace inotify
     {
     private:
         std::vector<std::filesystem::path> watchList;
+        recursiveMode=false;
     public:
         void excludeFile(const std::string& file);
         void fromFile(const std::string& file);
