@@ -12,3 +12,15 @@ meson compile -C build
 meson install -C build
 ```
 
+### Dependencies
+```
+A C++ compiler with support for C++23
+GLib, version: >=2.5
+Linux kernel version 3.19 or higher
+```
+
+### Licence
+GNU GPL, see [LICENSE](./LICENSE) file
+
+### Author
+Written by Kacper Paczos (kacper-paczos@linux.pl)
