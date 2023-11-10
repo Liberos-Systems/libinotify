@@ -44,7 +44,7 @@ namespace inotify
         };
 
         for (auto& path : generator(this->path)) {
-            // Add path to the watch list
+            watchList.push_back(path);
         }
     }
 
