@@ -1,10 +1,14 @@
 #pragma once
 #include <string>
+#include <filesystem>
+#include <generator>
 
 namespace inotify
 {
     class Watcher
     {
+    private:
+        std::vector<std::filesystem::path> watchList;
     public:
         void excludeFile(const std::string& file);
         void fromFile(const std::string& file);

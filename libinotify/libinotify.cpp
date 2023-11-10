@@ -34,6 +34,18 @@ namespace inotify
     void Watcher::recursive()
     {
         // Implementation of watching all subdirectories of any directories passed as arguments
+        // Using C++23 and generators
+        auto generator = [] (const std::filesystem::path& p) -> std::generator<std::filesystem::path> {
+            if (std::filesystem::is_directory(p)) {
+                for (auto& entry : std::filesystem::recursive_directory_iterator(p)) {
+                    co_yield entry.path();
+                }
+            }
+        };
+
+        for (auto& path : generator(this->path)) {
+            // Add path to the watch list
+        }
     }
 
     void Watcher::timeout(int seconds)

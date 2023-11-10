@@ -1,10 +1,12 @@
 cpp = meson.get_compiler('cpp')
-cpp14 = ['-std=c++20']
+cpp23 = ['-std=c++23']
 
-shared_library('libinotify',
+# make libinotify
+shared_library('inotify',
   'libinotify.cpp',
-  cpp_args : cpp14,
-  install : true
+  cpp_args : cpp23,
+  install : true,
+  install_dir : '/usr/lib/libinotify'
 )
 
-install_headers('./libinotify.hpp')
+install_headers('libinotify.hpp', install_dir : '/usr/include/libinotify')
