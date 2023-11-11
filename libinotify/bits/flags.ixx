@@ -1,8 +1,9 @@
-export module flags;
+module flags;
 #include <sys/inotify.h>
+
 /* /usr/include/sys/inotify.h */
 /* Special flags */
-export namespace inotify {
+namespace inotify {
     enum class InotifySpecialFlags : unsigned int {
         ONLYDIR=IN_ONLYDIR,         // Only watch the path if it is a directory 0x01000000
         DONT_FOLLOW=IN_DONT_FOLLOW, // Do not follow a sym link 0x02000000

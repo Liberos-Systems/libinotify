@@ -2,7 +2,7 @@ project('libinotify', ['cpp','c'],
         version : '0.2.0',
         meson_version: '>= 0.61.0',
         default_options : ['warning_level=3',
-                           'cpp_std=c++23'])
+                           'cpp_std=c++20'])
 
 BUILD_EXAMPLE=false
 compiler = meson.get_compiler('c')

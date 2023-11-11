@@ -1,12 +1,15 @@
 #pragma once
+#include <sys/inotify.h>
+#include "spdlog/spdlog.h"
 #include <string>
 #include <filesystem>
-#include <generator>
 #include <fstream>
 #include <iostream>
 #include <regex>
 #include <chrono>
 #include <thread>
+#include <queue>
+#include <map>
 
 namespace inotify
 {
