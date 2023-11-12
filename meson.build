@@ -4,7 +4,7 @@ project('libinotify', ['cpp','c'],
         default_options : ['warning_level=3',
                            'cpp_std=c++20'])
 
-BUILD_EXAMPLE=false
+BUILD_EXAMPLE=true
 compiler = meson.get_compiler('c')
 libc6_check_code = '''
                     #include <stdio.h>
@@ -17,7 +17,7 @@ if not compiler.compiles(libc6_check_code)
   error('libc6 not found')
 endif
 
-kernel_version = run_command('uname', '-r').stdout().strip()
+kernel_version = run_command('uname', '-r', check : true).stdout().strip()
 if kernel_version.version_compare('>=3.19')
   compiler = meson.get_compiler('cpp')
   code ='''
