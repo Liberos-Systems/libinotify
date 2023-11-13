@@ -32,7 +32,7 @@ namespace inotify
     }
     
     // public
-    Watcher::Watcher()
+    Watcher::Watcher():runWatcherThread(true)
     {
         fd = 0;
         try {
@@ -55,18 +55,21 @@ namespace inotify
             throw std::runtime_error("Failed to initialize inotify.");
         }
 
-        running = true;
+        runWatcherThread = true;
         if(std::this_thread::get_id() != observerThread.get_id() && observerThread.joinable()){
             observerThread.join();
         }
-        observerThread = std::thread([this](){ this->observeFiles(); });
+        observerThread = std::thread([this](){
+                while (runWatcherThread) {
+                    this->observeFiles();
+                }
+            });
     }
-
     Watcher::~Watcher()
     {
         spdlog::warn("Object has been deleted"); // Log warning that the object has been deleted
         spdlog::shutdown(); // Stop logging
-        running = false;
+        runWatcherThread = false;
         if (observerThread.joinable()) {
             observerThread.join();
         }
@@ -236,11 +239,13 @@ namespace inotify
     std::vector<std::string> Watcher::getCurrentEvents() const
     {
         std::vector<std::string> currentEvents;
-        auto fileEventsCopy = this->fileEvents;  // Create a copy of fileEvents
-        for (auto& event : fileEventsCopy) {     // Remove const qualifier
-            while (!event.second.empty()) {
-                currentEvents.push_back(event.second.front());
-                event.second.pop();
+        if (this->runWatcherThread) {
+            auto fileEventsCopy = this->fileEvents;  // Create a copy of fileEvents
+            for (auto& event : fileEventsCopy) {     // Remove const qualifier
+                while (!event.second.empty()) {
+                    currentEvents.push_back(event.second.front());
+                    event.second.pop();
+                }
             }
         }
         return currentEvents;

@@ -10,6 +10,7 @@
 #include <thread>
 #include <queue>
 #include <map>
+#include <atomic>
 
 namespace inotify
 {
@@ -18,6 +19,7 @@ namespace inotify
     private:
         bool verbose; // Add verbose flag
         std::vector<std::filesystem::path> watchList;
+        std::atomic<bool> runWatcherThread;
         std::map<std::filesystem::path, std::queue<std::string>> fileEvents; // Map where the first element is the path, and the second is a queue of events
         std::thread observerThread;
         bool recursiveMode=false;
