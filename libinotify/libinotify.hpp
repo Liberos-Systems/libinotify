@@ -21,6 +21,7 @@ namespace inotify
         std::map<std::filesystem::path, std::queue<std::string>> fileEvents; // Map where the first element is the path, and the second is a queue of events
         std::thread observerThread;
         bool recursiveMode=false;
+        bool running=false;
         void observeFiles();
         int fd;
     public:

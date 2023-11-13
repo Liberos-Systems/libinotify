@@ -29,11 +29,6 @@ namespace inotify
                 spdlog::info("Watching file: {}", file);
             }
         }
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
     
     // public
@@ -60,12 +55,21 @@ namespace inotify
             throw std::runtime_error("Failed to initialize inotify.");
         }
 
+        running = true;
+        if(std::this_thread::get_id() != observerThread.get_id() && observerThread.joinable()){
+            observerThread.join();
+        }
+        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     Watcher::~Watcher()
     {
-        spdlog::warn("Obiekt został usunięty"); // Log warning that the object has been deleted
+        spdlog::warn("Object has been deleted"); // Log warning that the object has been deleted
         spdlog::shutdown(); // Stop logging
+        running = false;
+        if (observerThread.joinable()) {
+            observerThread.join();
+        }
     }
 
     void Watcher::excludeFile(const std::string& file)
@@ -85,11 +89,6 @@ namespace inotify
                 ++it;
             }
         }
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     void Watcher::fromFile(const std::string& file)
@@ -115,11 +114,6 @@ namespace inotify
                 }
             }
         }
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     void Watcher::zero()
@@ -141,11 +135,6 @@ namespace inotify
                 ++it;
             }
         }
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     void Watcher::excludei(const std::string& pattern)
@@ -162,11 +151,6 @@ namespace inotify
                 ++it;
             }
         }
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     void Watcher::recursive(const std::string& path)
@@ -197,11 +181,6 @@ namespace inotify
         };
 
         traverse(std::filesystem::path(path));
-
-        if(observerThread.joinable()){
-            observerThread.join();
-        }
-        observerThread = std::thread([this](){ this->observeFiles(); });
     }
 
     void Watcher::timeout(int seconds)
