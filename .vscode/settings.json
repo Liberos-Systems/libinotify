@@ -64,6 +64,12 @@
         "condition_variable": "cpp",
         "mutex": "cpp",
         "cinttypes": "cpp",
-        "csignal": "cpp"
-    }
+        "csignal": "cpp",
+        "any": "cpp",
+        "forward_list": "cpp",
+        "optional": "cpp",
+        "ranges": "cpp",
+        "valarray": "cpp"
+    },
+    "C_Cpp.default.compileCommands": "builddir/compile_commands.json"
 }
