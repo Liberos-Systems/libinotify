@@ -1,4 +1,4 @@
-module mask; 
+export module mask; 
 #include <sys/inotify.h>
 
 /* Supported events suitable for MASK parameter of INOTIFY_ADD_WATCH. */

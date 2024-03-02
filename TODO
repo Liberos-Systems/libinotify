@@ -1,0 +1,56 @@
+Dodać obserwacje katalogu, pliku, do pewnej głęnokości, obsługe masek, itd.
+
+libspdlog-dev
+clang
+
+przed znieszczeniem, nalezy zwracac komplet informacji
+
+rm -rf build/ && meson build && meson compile -C build && meson install -C build
+rm -rf build/ && meson build && meson compile -C build 
+
+upewnić się, że można na raz zbudowac i zainstalowac biblkę, a potem dopiero program za jednym razem
+
+checkboy z funkcjami
+
+dodać sciezki instalacji header i lib i programu
+
+
+
+
+
+-------------------------------
+Konstruktor
+Dekonstuktor
+Enable
+Disable
+
+komenda watch (zwraca eventy na obserwowanych plikach), w formie JSON? W danej jednostce czasu, uzywa czasu lokalnego, lub zadanego według strefy czasowej, domyślnie czysci buffor, ale może tego nie robić
+komenda mask (watch obserwuje wszydtkie eventy, za pomocą mask wskazuje się ktore ma obserwować, brak arguemntu, oznacza brak obserwacji).
+
+komenda trigger, wywołuje funkcje, kiedy event). Domyślnie nie zbiera niczego, funkcja przeciążona, można od razu podać typ eventu
+komendta event, lista eventów, ktore wywoluja funkcje, domyslnie żaden. Opisuje wszystie trigeryt zbiorczo.
+
+Add file
+Add folder
+Add path, dodaje ścieżkę, czyli foldery i ich zawartość, ale nie rekursywnie.
+Tree -- hofman
+
+TODO TODO
+
+Verbose set as true/false czy włączony lub nie, jeśli z argumentem to dodatkowo ustawia.
+Tryb jedynego obserwatora, wielu obserwatorów kiedy?
+Call dla wszystkich
+Trigger dla konkretnych plików, masek, funkcji.
+komenda stop
+
+scieżki zawsze podane są w formie "/abb/adf/adsd" chodzi o rozdział znakiem /, po prostu twórz foldery wszystkie po drodzne jak pokazuje lokalizacja, jesli sciezka zaczyna się od ./ to znaczy ze jest to sciezka wzgledna, ktorej punktem odniesnia jest currentPath_
+
+
+// Removing a file from the observed
+// Removing a folder from the observed and its children, or recursively
+
+dopisz funkcje removeFile, ktora usunie plik z aboslutePath_, jesli tam jest, jesli jest ich wiecej, napisz warning, że jest jeszcze inny obiekt taki sam.
+
+dopisz funkcje removeFolder, ktora usunie folder i wszystkie pliki bez katalogów w środku, no chyba ze depth jest inne niż 0, to do tej głębokości, dodaj też wersje rekursywną, jesli jest na true, to usunie wszystkie pliki i foldery z aboslutePath_ rekursywnie, o ile są w tej sciezce, jesli nie ma, niech wysle warning, że nie usunieto bo nie ma.
+
+Niech funkcja zwraca false w przypadku błedu, w przeciwnym razie true.

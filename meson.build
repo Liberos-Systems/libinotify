@@ -3,9 +3,13 @@ project('libinotify', ['cpp','c'],
         meson_version: '>= 0.61.0',
         default_options : ['warning_level=3',
                            'cpp_std=c++20'])
+# https://github.com/mesonbuild/meson/issues/5024
+#add_global_arguments('-fmodules-ts', language : 'cpp')
 
-BUILD_EXAMPLE=true
+BUILD_EXAMPLE=false
 compiler = meson.get_compiler('cpp')
+
+
 libc6_check_code = '''
                     #include <stdio.h>
                     int main() {
@@ -35,6 +39,10 @@ if kernel_version.version_compare('>=3.19')
     glib_dep = dependency('glib-2.0', version: '>=2.5')
 
     subdir('libinotify')
+    # https://github.com/mesonbuild/meson/issues/5024
+    #mask_module = static_library('mask', 'libinotify/bits/mask.ixx')
+    # libinotify = library('libinotify', 'libinotify/libinotify.cpp',
+    #                     link_with : mask_module)
 
     if BUILD_EXAMPLE == true
       subdir('example')

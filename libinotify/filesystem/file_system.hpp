@@ -6,14 +6,14 @@
 
 namespace inotify
 {
-    class FileSystemManager
+    class FileSystem
     {
     private:
         std::filesystem::path root_;
         std::vector<std::filesystem::path> absolutePaths_;
 
     public:
-        FileSystemManager() : root_(std::filesystem::current_path()) {}
+        FileSystem() : root_(std::filesystem::current_path()) {}
         std::vector<std::string> ls(const std::string &path = "")
         {
             std::filesystem::path targetPath;
